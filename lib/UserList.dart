@@ -78,7 +78,7 @@ class _UserListState extends State<UserList> {
                   Card(
                       child:  ListTile(      
                         onTap: (){
-                          String roomId = chatRoomId(_auth.currentUser.displayName, userMap['name']);
+                          //String roomId = chatRoomId(_auth.currentUser.displayName, userMap['name']);
                         },  
                         title:  Text('${userProfileList[index]['name']}'),
                         subtitle: Text('${userProfileList[index]['email']}'),

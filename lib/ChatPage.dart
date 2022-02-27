@@ -48,40 +48,42 @@ class _ChatPageState extends State<ChatPage> {
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
     return Scaffold(
-      body: SafeArea(
-        child: Column(
-          children: [
-            Container(
-              height: size.height / 1.25, 
-              width: size.width,
-              child: StreamBuilder<QuerySnapshot>(
-                stream: firestore.collection("chatRoom").
-                doc(chatRoomId).
-                collection('chat').
-                snapshots(),
-
-                builder: (BuildContext context, AsyncSnapshot snapshot) {
-                  if(snapshot.data != null){
-                    return ListView.builder(
-                      itemCount: snapshot.data?.docs.length,
-                      itemBuilder: (context,index)
-                      {
-                        Map<String,dynamic> map = 
-                        snapshot.data.docs[index].data();
-                        return messages(size,map);
-                      },
-                      );
-                  }else{
-                    return Container();
-                  }
-                  
-                },
+      body: SingleChildScrollView(
+        child: SafeArea(
+          child: Column(
+            children: [
+              Container(
+                height: size.height / 1.25, 
+                width: size.width,
+                child: StreamBuilder<QuerySnapshot>(
+                  stream: firestore.collection("chatRoom").
+                  doc(chatRoomId).
+                  collection('chat').
+                  snapshots(),
+      
+                  builder: (BuildContext context, AsyncSnapshot snapshot) {
+                    if(snapshot.data != null){
+                      return ListView.builder(
+                        itemCount: snapshot.data?.docs.length,
+                        itemBuilder: (context,index)
+                        {
+                          Map<String,dynamic> map = 
+                          snapshot.data.docs[index].data();
+                          return messages(size,map);
+                        },
+                        );
+                    }else{
+                      return Container();
+                    }
+                    
+                  },
+                ),
+      
               ),
-
-            ),
-          ] 
-        ),
-        ),
+            ] 
+          ),
+          ),
+      ),
       bottomNavigationBar: Row(
         children: [
           Expanded(
